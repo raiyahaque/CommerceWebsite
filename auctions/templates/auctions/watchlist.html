@@ -1,0 +1,17 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Watchlist</h2>
+      <br>
+      {% for items in watchlist %}
+      <br>
+        <a href="{% url 'listing_page' id=items.pk %}">{{ items.title }}</a>
+        <br>
+        {% if items.image_url %}
+          <img src={{items.image_url}} alt="pic" width=20%></img>
+        {% endif %}
+        <li>Price: ${{ items.current_price }}</li>
+        <li>Description: {{ items.description }}</li>
+      {% endfor %}
+
+{% endblock %}

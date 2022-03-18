@@ -1,0 +1,19 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Closed Listings</h2>
+    <div class="grid">
+      {% for listing in listings %}
+      <div class=grid-item">
+        <br>
+        <a href="{% url 'closed_listings_page' id=listing.pk %}">{{ listing.title }}</a>
+        <br>
+        {% if listing.image_url %}
+          <img src={{listing.image_url}} alt="pic" width=60%></img>
+        {% endif %}
+        <li>Final Price: ${{ listing.current_price }}</li>
+        <li>Category: {{ listing.category }}</li>
+      </div>
+      {% endfor %}
+    </div>
+{% endblock %}

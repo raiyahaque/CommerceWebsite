@@ -1,0 +1,19 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Closed Listing: {{ listing.title }}</h2>
+    {% if message %}
+      <h3>{{ message }}</h3>
+    {% endif %}
+      <br>
+        {% if listing.image_url %}
+          <img src={{listing.image_url}} alt="pic" width=25%></img>
+        {% endif %}
+
+        <li>Final Price: ${{ listing.current_price }}</li>
+        <li>Category: {{ listing.category }}</li>
+        <li>Description: {{ listing.description }}</li>
+        <li>Closed by: {{ listing.users }}</li>
+        <h2><strong>Winner: {{ listing.winner }}</strong></h2>
+
+{% endblock %}

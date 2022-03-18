@@ -1,0 +1,64 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Listing: {{ listing.title }}</h2>
+      {% if message %}
+        <h4>{{ message }}</h4>
+      {% endif %}
+      {% if listing.users == user %}
+        <form action="{% url 'close_listing' id=listing.pk %}" method="post">
+          {% csrf_token %}
+          <input type="submit" value="Close Listing">
+        </form>
+      {% endif %}
+      <br>
+      {% if listing_object not in list %}
+            <form action="{% url 'watchlist_add' id=listing.pk %}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Add to watchlist">
+            </form>
+      {% else %}
+            <form action="{% url 'watchlist_remove' id=listing.pk %}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Remove from watchlist">
+            </form>
+      {% endif %}
+
+
+      <br>
+        {% if listing.image_url %}
+          <img src={{listing.image_url}} alt="pic" width=25%></img>
+        {% endif %}
+        <li>Description: {{ listing.description }}</li>
+        <li>Price: ${{ listing.current_price }}</li>
+        {% if listing.category %}
+          <li>Category: {{ listing.category }}</li>
+        {% endif %}
+        <li>Listed by: {{ listing.users }}
+      <form action="{% url 'listing_page' id=listing.pk %}" method="post">
+        <br>
+        {% csrf_token %}
+        {{ bids }} bid(s) so far.
+        <div class="form-group">
+            <input class="form-control" type="text" name="bid" placeholder="Bid">
+        </div>
+        <input type="submit" value="Place Bid">
+      </form>
+
+      <br>
+      <h3>Comments:</h3>
+      {% for comment in comments %}
+      <ul>
+        <li>Made by {{ comment.users }}: {{ comment.comment }} </li>
+      </ul>
+      {% endfor %}
+      <form action="{% url 'commentary' id=listing.pk %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <input class="form-control" type="text" name="comment" placeholder="Comment">
+        </div>
+        <input type="submit" value="Add comment">
+      </form>
+
+
+{% endblock %}
